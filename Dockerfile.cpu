@@ -1,0 +1,27 @@
+FROM continuumio/anaconda3
+
+MAINTAINER Duc Nguyen <ducnt4@vng.com.vn>
+
+
+RUN conda install -c conda-forge keras 
+
+RUN conda install -c conda-forge tensorflow 
+
+# Set up our notebook config.
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Copy sample notebooks.
+COPY notebooks /notebooks
+
+COPY run_jupyter.sh /
+
+# TensorBoard
+EXPOSE 6006
+# IPython
+EXPOSE 8888
+
+WORKDIR "/"
+
+RUN chmod +x /run_jupyter.sh
+
+CMD  /bin/bash
